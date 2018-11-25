@@ -10,9 +10,11 @@ public class GE_Solutions {
 //		System.out.println(text);
 //		SubstringSlicing slice = new SubstringSlicing(text);
 //		System.out.println(slice.cutAndRearrange());
-		PalindromicCuts pc = new PalindromicCuts("abbavv",2);
-		System.out.println(pc.cuts());
-		pc.getTable();
+		PalindromicCuts pc = new PalindromicCuts("aabbc",2);
+//		System.out.println(pc.cuts());
+		System.out.println(pc.cutAndCount(0, 5,5, 2));
+//		pc.getTable();
+//		System.out.println(pc.addTable());
 	}
 
 }

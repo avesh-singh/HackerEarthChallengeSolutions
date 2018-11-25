@@ -30,6 +30,7 @@ public class PalindromicCuts {
 	private SubstringSlicing slice;
 	private Queue<triplet> palindromes;
 	private int[][] pals;
+	private int sum = 0;
 	public PalindromicCuts(String st,int k){
 		input = st;
 		len = st.length();
@@ -43,6 +44,35 @@ public class PalindromicCuts {
 			}
 		}
 		slice = new SubstringSlicing(input);
+	}
+	
+	public int cutAndCount(int st,int end, int parent, int k){
+//		System.out.println("[" + st + "," + end + "," + k +","+sum+ "]");
+		if(k==0){
+//			System.out.println(input.substring(st,end));
+			if(pals[st][end]==-1){
+				pals[st][end] = slice.palindrome(input.substring(st,end))?1:0;
+			}else if(pals[st][end]==1){
+				pals[st][parent]++;
+			}
+			 sum+=pals[st][end];
+			 return pals[st][end];
+		}else{
+			int count = 0;
+			int f = 0,s=0;
+			for(int i=st+1;i<=len-k;i++){
+				f = cutAndCount(st,i,parent,0);
+//				sum += f;
+				System.out.println("[" + st + "," + i + "," + 0 + "] + "+ "[" + i + "," + end + "," + (k-1) + "]");
+				System.out.println("first cut: "+ f);
+				s = cutAndCount(i,end,parent,k-1);
+				System.out.println("second cut: "+s);
+//				sum+=s;
+				System.out.println(sum);
+			}
+			return sum;
+		}
+		
 	}
 	
 	public int cuts(){
@@ -94,6 +124,16 @@ public class PalindromicCuts {
 			}
 			System.out.println();
 		}
+	}
+	
+	public int addTable(){
+		int count = 0;
+		for(int i=0;i<pals.length;i++){
+			for(int j=0;j<pals[0].length;j++){
+				if(pals[i][j]>0) count+=pals[i][j];
+			}
+		}
+		return count;
 	}
 	
 	public void getQueue(){
