@@ -24,6 +24,8 @@ public class BeautifulNumbers {
 	
 	private static void findRange(Long X){
 		int p = 0;
+		// if size of beautyNums array>X, then we already have beauty number in the array
+		// just findN
 		if(beautyNums.size()>X){
 			result.add(findN(X));
 			return;
@@ -31,12 +33,21 @@ public class BeautifulNumbers {
 		while(Math.pow(2, p)<X){
 			p++;
 		}
-		while(beautyNums.size()<=Math.pow(2, p)){
+		p--; // by observation, we only need beauty nums till 2^(p-1) to find N
+		while(beautyNums.size()<Math.pow(2, p)){
 			beautyNums.add(0);
 		}
-		print();
-		for(int i=0;i<Math.pow(2, p-1);i++){
-			beautyNums.set((int)Math.pow(2, p-1)+i, beautyNums.get(i)+1);
+		int t = p-1;
+		// finding t to determine which additional beautyNums we have to find now
+		while(beautyNums.get((int)Math.pow(2, t)-1)==0){
+			t--;
+		}
+		for(int j=t;j<=p;j++){
+//			System.out.println(Math.pow(2, j-1));
+			for(int i=0;i<Math.pow(2, j-1);i++){
+				beautyNums.set((int)Math.pow(2, j-1)+i, beautyNums.get(i)+1);
+			}
+//			print();
 		}
 		result.add(findN(X));
 	}
@@ -44,27 +55,23 @@ public class BeautifulNumbers {
 	private static int findN(Long X){
 		Long sum = new Long(0);
 		int i=0;
-		while(sum<X){
+//		System.out.println(X);
+		while(sum<X && i<beautyNums.size()){
 			sum += beautyNums.get(i);
+//			System.out.print(sum+" ");
+			i++;
 		}
-		return i;
+//		System.out.println();
+		return i-1;
 	}
 	
-	private static void print(){
-		for(int i=0;i<beautyNums.size();i++){
-			System.out.print(beautyNums.get(i));
+	private static void print(List<Integer> list,String delim){
+		for(int i=0;i<list.size();i++){
+			System.out.print(list.get(i)+delim);
 		}
 		System.out.println();
 	}
-	
-//	private static Long sumArray(int end){
-//		Long sum = new Long(0);
-//		for(int i=0;i<end;i++){
-//			sum += beautyNums.get(i);
-//		}
-//		return sum;
-//	}
-	
+		
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 		int T = scan.nextInt();
@@ -74,9 +81,11 @@ public class BeautifulNumbers {
 		result = new ArrayList<>();
 		for(int i=0;i<T;i++){
 			X = scan.nextLong();
-			System.out.println(X);
 			findRange(X);
 		}
+//		print(beautyNums," ");
+		print(result,"\n");
+		scan.close();
 	}
 
 }
