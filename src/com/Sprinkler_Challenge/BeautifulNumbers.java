@@ -20,20 +20,20 @@ import java.util.Scanner;
  * */
 public class BeautifulNumbers {
 
-	private static List<Integer> beautyNums,result;
+	private static List<Integer> beautyNums,sums;
 	
 	private static void findRange(Long X){
 		int p = 0;
 		// if size of beautyNums array>X, then we already have beauty number in the array
 		// just findN
 		if(beautyNums.size()>X){
-			result.add(findN(X));
+			System.out.println(findN(X));
+//			result.add(findN(X));
 			return;
 		}
 		while(Math.pow(2, p)<X){
 			p++;
 		}
-		p--; // by observation, we only need beauty nums till 2^(p-1) to find N
 		while(beautyNums.size()<Math.pow(2, p)){
 			beautyNums.add(0);
 		}
@@ -49,14 +49,18 @@ public class BeautifulNumbers {
 			}
 //			print();
 		}
-		result.add(findN(X));
+		System.out.println(findN(X));
+//		result.add(findN(X));
 	}
 	
 	private static int findN(Long X){
 		Long sum = new Long(0);
-		int i=0;
+		int i=sums.size();
 //		System.out.println(X);
-		while(sum<X && i<beautyNums.size()){
+		while(i>0 && sums.get(i-1)>=X){
+			
+		}
+		while(sum<X){
 			sum += beautyNums.get(i);
 //			System.out.print(sum+" ");
 			i++;
@@ -78,13 +82,12 @@ public class BeautifulNumbers {
 		Long X;
 		beautyNums = new ArrayList<>();
 		beautyNums.add(0);beautyNums.add(1);
-		result = new ArrayList<>();
 		for(int i=0;i<T;i++){
 			X = scan.nextLong();
 			findRange(X);
 		}
-//		print(beautyNums," ");
-		print(result,"\n");
+		print(beautyNums," ");
+//		print(result,"\n");
 		scan.close();
 	}
 
