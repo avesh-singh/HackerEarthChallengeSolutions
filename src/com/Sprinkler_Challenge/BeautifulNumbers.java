@@ -81,6 +81,7 @@ public class BeautifulNumbers {
 		int T = scan.nextInt();
 		Long X;
 		beautyNums = new ArrayList<>();
+		sums = new ArrayList<>();
 		beautyNums.add(0);beautyNums.add(1);
 		for(int i=0;i<T;i++){
 			X = scan.nextLong();
